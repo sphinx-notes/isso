@@ -1,9 +1,9 @@
-===================
-sphinxnotes-snippet
-===================
+================
+sphinxnotes-isso
+================
 
-------------------------------------------------------
-Non-intrusive snippet manager for Sphinx documentation
-------------------------------------------------------
+--------------------------------------------------------
+Sphinx extension for embeding Isso comments in documents
+--------------------------------------------------------
 
-Please refer to https://sphinx-notes.github.io/snippet/ for documentation.
+Please refer to https://sphinx-notes.github.io/isso/ for documentation.
