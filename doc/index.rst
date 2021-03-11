@@ -13,6 +13,10 @@ Sphinx extension for embeding Isso comments in documents
 :copyright: Copyright ©2021 by Shengyu Zhang.
 :license: BSD, see LICENSE for details.
 
+Please comment here:
+
+.. isso::
+
 .. contents::
    :local:
    :backlinks: none
