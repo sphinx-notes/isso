@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>sphinxnotes-isso &#8212; sphinxnotes-isso 1.0a0 documentation</title>
+    <title>sphinxnotes-isso &#8212; sphinxnotes-isso 1.0a1 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -39,7 +39,7 @@
 <a class="reference external image-reference" href="https://github.com/sphinx-notes/isso"><img alt="https://img.shields.io/github/stars/sphinx-notes/isso.svg?style=social&amp;label=Star&amp;maxAge=2592000" src="https://img.shields.io/github/stars/sphinx-notes/isso.svg?style=social&amp;label=Star&amp;maxAge=2592000" /></a>
 <dl class="field-list simple">
 <dt class="field-odd">version</dt>
-<dd class="field-odd"><p>1.0a0</p>
+<dd class="field-odd"><p>1.0a1</p>
 </dd>
 <dt class="field-even">copyright</dt>
 <dd class="field-even"><p>Copyright ©2021 by Shengyu Zhang.</p>
@@ -52,9 +52,10 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#installation" id="id1">Installation</a></p></li>
 <li><p><a class="reference internal" href="#configuration" id="id2">Configuration</a></p></li>
-<li><p><a class="reference internal" href="#change-log" id="id3">Change Log</a></p>
+<li><p><a class="reference internal" href="#functionalities" id="id3">Functionalities</a></p></li>
+<li><p><a class="reference internal" href="#change-log" id="id4">Change Log</a></p>
 <ul>
-<li><p><a class="reference internal" href="#xxxx-xx-xx-1-0a0" id="id4">XXXX-XX-XX 1.0a0</a></p></li>
+<li><p><a class="reference internal" href="#a1" id="id5">2021-03-13 1.0a1</a></p></li>
 </ul>
 </li>
 </ul>
@@ -77,19 +78,53 @@
 <div class="section" id="configuration">
 <h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
 <dl class="field-list simple">
-<dt class="field-odd">isso_base_url</dt>
-<dd class="field-odd"><p>A HTTP URL points to your Isso server</p>
+<dt class="field-odd">isso_url</dt>
+<dd class="field-odd"><p>HTTP URL points to your Isso server</p>
 </dd>
 </dl>
+<p>The following configuration items are corresponding to <a class="reference external" href="https://posativ.org/isso/docs/configuration/client/">Isso Client Configuration</a> ,
+please use Python’s boolean, numeric value instead of string formatted value.</p>
+<ul class="simple">
+<li><p>isso_css</p></li>
+<li><p>isso_lang</p></li>
+<li><p>isso_reply_to_self</p></li>
+<li><p>isso_require_author</p></li>
+<li><p>isso_require_email</p></li>
+<li><p>isso_max_comments_top</p></li>
+<li><p>isso_max_comments_nested</p></li>
+<li><p>isso_reveal_on_click</p></li>
+<li><p>isso_avatar</p></li>
+<li><p>isso_avatar_bg</p></li>
+<li><p>isso_avatar_fg</p></li>
+<li><p>isso_vote</p></li>
+<li><p>isso_vote_levels</p></li>
+<li><p>isso_feed</p></li>
+</ul>
+</div>
+<div class="section" id="functionalities">
+<h3>Functionalities<a class="headerlink" href="#functionalities" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">isso</span></code> directive is used to insert a isso comment box.
+The docname of current document is used as Isso thread ID.</p>
+<p>The directive supports the following options:</p>
+<dl class="field-list simple">
+<dt class="field-odd">id</dt>
+<dd class="field-odd"><p>(text)
+Specify a thread ID rather than use docname</p>
+</dd>
+</dl>
+<p>The comment box at the bottom is generated via the following source:</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">isso</span><span class="p">::</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="change-log">
 <h3>Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="xxxx-xx-xx-1-0a0">
-<h4>XXXX-XX-XX 1.0a0<a class="headerlink" href="#xxxx-xx-xx-1-0a0" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="a1">
+<h4>2021-03-13 1.0a1<a class="headerlink" href="#a1" title="Permalink to this headline">¶</a></h4>
 <p><em>Section author: Shengyu Zhang</em></p>
-<p>The alpha version is out, enjoy~</p>
+<p>The first version is out, enjoy~</p>
 <hr class="docutils" />
-<section id="isso-thread"></section></div>
+<section data-isso-id="index" id="isso-thread"></section></div>
 </div>
 </div>
 </div>

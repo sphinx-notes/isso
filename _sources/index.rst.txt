@@ -39,17 +39,54 @@ Add extension to :file:`conf.py` in your sphinx project:
 Configuration
 =============
 
-:isso_base_url: A HTTP URL points to your Isso server
+:isso_url: HTTP URL points to your Isso server
+
+The following configuration items are corresponding to `Isso Client Configuration`_ ,
+please use Python's boolean, numeric value instead of string formatted value.
+
+- isso_css
+- isso_lang
+- isso_reply_to_self
+- isso_require_author
+- isso_require_email
+- isso_max_comments_top
+- isso_max_comments_nested
+- isso_reveal_on_click
+- isso_avatar
+- isso_avatar_bg
+- isso_avatar_fg
+- isso_vote
+- isso_vote_levels
+- isso_feed
+
+.. _Isso Client Configuration: https://posativ.org/isso/docs/configuration/client/
+
+Functionalities
+===============
+
+The ``isso`` directive is used to insert a isso comment box.
+The docname of current document is used as Isso thread ID.
+
+The directive supports the following options:
+
+:id: (text)
+    Specify a thread ID rather than use docname
+
+The comment box at the bottom is generated via the following source:
+
+.. code-block:: rst
+
+   .. isso::
 
 Change Log
 ==========
 
-XXXX-XX-XX 1.0a0
+2021-03-13 1.0a1
 ----------------
 
 .. sectionauthor:: Shengyu Zhang
 
-The alpha version is out, enjoy~
+The first version is out, enjoy~
 
 --------------------------------------------------------------------------------
 
