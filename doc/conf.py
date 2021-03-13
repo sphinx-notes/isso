@@ -37,7 +37,7 @@ extensions = [
     'isso',
 ]
 
-isso_base_url = 'http://tcc.silverrainz.me:30500'
+isso_base_url = 'https://tcc.silverrainz.me:30500'
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
