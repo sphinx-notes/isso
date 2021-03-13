@@ -13,10 +13,6 @@ Sphinx extension for embeding Isso comments in documents
 :copyright: Copyright ©2021 by Shengyu Zhang.
 :license: BSD, see LICENSE for details.
 
-Please comment here:
-
-.. isso::
-
 .. contents::
    :local:
    :backlinks: none
@@ -43,7 +39,7 @@ Add extension to :file:`conf.py` in your sphinx project:
 Configuration
 =============
 
-The extension provides the following configuration:
+:isso_base_url: A HTTP URL points to your Isso server
 
 Change Log
 ==========
@@ -54,3 +50,7 @@ XXXX-XX-XX 1.0a0
 .. sectionauthor:: Shengyu Zhang
 
 The alpha version is out, enjoy~
+
+--------------------------------------------------------------------------------
+
+.. isso::
