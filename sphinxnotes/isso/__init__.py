@@ -11,6 +11,7 @@
 
 from __future__ import annotations
 from typing import TYPE_CHECKING
+import posixpath
 
 from docutils import nodes
 from docutils.parsers.rst import directives, Directive
@@ -30,14 +31,6 @@ class IssoNode(nodes.General, nodes.Element):
 
     @staticmethod
     def visit(self, node):
-        # Insert <script>
-        kwargs = {
-            'data-isso': self.builder.config.isso_base_url,
-            'src': self.builder.config.isso_base_url + '/js/embed.min.js',
-        }
-        self.body.append(self.starttag(node, 'script', '', **kwargs))
-        self.body.append('</script>')
-
         self.body.append(self.starttag(node, 'section', ''))
 
     @staticmethod
@@ -48,24 +41,43 @@ class IssoNode(nodes.General, nodes.Element):
 class IssoDirective(Directive):
     """Isso ".. isso::" rst directive."""
 
-    option_spec = {
-        'id': directives.unchanged,
-    }
-
     def run(self):
         """Executed by Sphinx.
         :returns: Single IssoNode instance with config values passed as arguments.
         :rtype: list
         """
+
         node = IssoNode()
         node['ids'] = ['isso-thread']
 
         return [node]
+
+def on_html_page_context(app:Sphinx, pagename:str, templatename:str, context,
+                         doctree:nodes.document) -> None:
+    """Called when the HTML builder has created a context dictionary to render a template with.
+
+    Conditionally adding isso client script to <head /> if the directive is used in a page.
+
+    :param sphinx.application.Sphinx app: Sphinx application object.
+    :param str pagename: Name of the page being rendered (without .html or any file extension).
+    :param str templatename: Page name with .html.
+    :param dict context: Jinja2 HTML context.
+    :param docutils.nodes.document doctree: Tree of docutils nodes.
+    """
+    if not doctree or not doctree.next_node(IssoNode):
+        # Only add for document which contains isso node
+        return
+    kwargs = {
+        'data-isso': app.config.isso_base_url,
+    }
+    app.add_js_file(posixpath.join(app.config.isso_base_url, 'js/embed.min.js'),
+                    **kwargs)
 
 
 def setup(app:Sphinx):
     app.add_config_value('isso_base_url', None, {})
     app.add_directive('isso', IssoDirective)
     app.add_node(IssoNode, html=(IssoNode.visit, IssoNode.depart))
+    app.connect('html-page-context', on_html_page_context)
 
     return {'version': __version__}
