@@ -78,7 +78,7 @@ class IssoDirective(Directive):
         node = IssoNode()
         node['ids'] = ['isso-thread']
         node['thread-id'] = self.options.get('id') or \
-            self.state.document.settings.env.docname
+            '/' + self.state.document.settings.env.docname
 
         return [node]
 
