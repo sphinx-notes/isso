@@ -81,6 +81,13 @@ The comment box at the bottom is generated via the following source:
 Change Log
 ==========
 
+2021-03-23 1.0a2
+----------------
+
+.. sectionauthor:: Shengyu Zhang
+
+- Fixes: Thread ID should starts with slash
+
 2021-03-13 1.0a1
 ----------------
 
