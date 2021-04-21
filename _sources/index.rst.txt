@@ -71,6 +71,8 @@ The directive supports the following options:
 
 :id: (text)
     Specify a thread ID rather than use docname
+:title: (text)
+    Specify a thread title rather than use document title
 
 The comment box at the bottom is generated via the following source:
 
@@ -80,6 +82,13 @@ The comment box at the bottom is generated via the following source:
 
 Change Log
 ==========
+
+2021-04-21 1.0
+--------------
+
+.. sectionauthor:: Shengyu Zhang
+
+- Use document title as Isso thread title
 
 2021-03-23 1.0a2
 ----------------
