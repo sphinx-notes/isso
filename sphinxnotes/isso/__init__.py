@@ -22,7 +22,7 @@ from sphinx.util import logging
 
 __title__= 'sphinxnotes-isso'
 __license__ = 'BSD',
-__version__ = '1.0a2'
+__version__ = '1.0'
 __author__ = 'Shengyu Zhang'
 __url__ = 'https://sphinx-notes.github.io/isso'
 __description__ = 'Sphinx extension for embeding Isso comments in documents'
