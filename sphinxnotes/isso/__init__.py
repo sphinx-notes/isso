@@ -18,6 +18,7 @@ from docutils.parsers.rst import directives, Directive
 
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
+from sphinx.util import logging
 
 __title__= 'sphinxnotes-isso'
 __license__ = 'BSD',
@@ -35,6 +36,8 @@ CONFIG_ITEMS = ['isso_css', 'isso_lang', 'isso_reply_to_self',
              'isso_reveal_on_click', 'isso_avatar', 'isso_avatar_bg',
              'isso_avatar_fg', 'isso_vote', 'isso_vote_levels',
              'isso_feed']
+
+logger = logging.getLogger(__name__)
 
 def ext_config_to_isso_config(key:str, value:Any) -> Tuple[str,str]:
     assert key in CONFIG_ITEMS
@@ -55,7 +58,10 @@ class IssoNode(nodes.General, nodes.Element):
         kwargs = {
             'data-isso-id': node['thread-id'],
         }
+        if node.get('thread-title'):
+            kwargs['data-title'] = node['thread-title']
         self.body.append(self.starttag(node, 'section', '', **kwargs))
+
 
     @staticmethod
     def depart(self, _):
@@ -66,7 +72,8 @@ class IssoDirective(Directive):
     """Isso ".. isso::" rst directive."""
 
     option_spec = {
-        'id': directives.unchanged
+        'id': directives.unchanged,
+        'title': directives.unchanged,
     }
 
     def run(self):
@@ -77,10 +84,22 @@ class IssoDirective(Directive):
 
         node = IssoNode()
         node['ids'] = ['isso-thread']
-        node['thread-id'] = self.options.get('id') or \
-            '/' + self.state.document.settings.env.docname
+        if self.options.get('id'):
+            thread_id = self.options.get('id')
+            if not thread_id.startswith('/'):
+                logger.warning('isso thread-id should starts with slash', location=node)
+            node['thread-id'] = thread_id
+        else:
+            node['thread-id'] = '/' + self.state.document.settings.env.docname
+        if self.options.get('title'):
+            node['thread-title'] = self.options.get('title')
+        else:
+            title = self.state.document.next_node(nodes.title)
+            if title:
+                node['thread-title'] = title.astext()
 
         return [node]
+
 
 def on_html_page_context(app:Sphinx, pagename:str, templatename:str, context,
                          doctree:nodes.document) -> None:
