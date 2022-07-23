@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 from sphinx.util import logging
 
 __title__= 'sphinxnotes-isso'
-__license__ = 'BSD',
+__license__ = 'BSD'
 __version__ = '1.0'
 __author__ = 'Shengyu Zhang'
 __url__ = 'https://sphinx-notes.github.io/isso'
