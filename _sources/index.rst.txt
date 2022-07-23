@@ -13,6 +13,12 @@ Sphinx extension for embeding Isso comments in documents
 :copyright: Copyright ©2021 by Shengyu Zhang.
 :license: BSD, see LICENSE for details.
 
+--------------------------------------------------------------------------------
+
+.. isso::
+
+--------------------------------------------------------------------------------
+
 .. contents::
    :local:
    :backlinks: none
@@ -74,7 +80,7 @@ The directive supports the following options:
 :title: (text)
     Specify a thread title rather than use document title
 
-The comment box at the bottom is generated via the following source:
+The comment box at the top is generated via the following source:
 
 .. code-block:: rst
 
@@ -104,6 +110,3 @@ Change Log
 
 The first version is out, enjoy~
 
---------------------------------------------------------------------------------
-
-.. isso::
