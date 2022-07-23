@@ -37,7 +37,7 @@ extensions = [
     'isso',
 ]
 
-isso_url = 'https://sphinxnotes.silverrainz.me:30500'
+isso_url = 'https://comments.silverrainz.me:30501'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
