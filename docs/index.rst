@@ -1,112 +1,38 @@
-================
-sphinxnotes-isso
-================
+.. This file is generated from sphinx-notes/template. DO NOT EDIT.
 
---------------------------------------------------------
-Sphinx extension for embeding Isso comments in documents
---------------------------------------------------------
+.. include:: ../README.rst
 
-.. image:: https://img.shields.io/github/stars/sphinx-notes/isso.svg?style=social&label=Star&maxAge=2592000
-   :target: https://github.com/sphinx-notes/isso
-
-:version: |version|
-:copyright: Copyright ©2021 by Shengyu Zhang.
-:license: BSD, see LICENSE for details.
-
---------------------------------------------------------------------------------
-
-.. isso::
-
---------------------------------------------------------------------------------
-
-.. contents::
-   :local:
-   :backlinks: none
-
-Installation
+Introduction
 ============
 
-Download it from official Python Package Index:
+.. include:: intro_for_index.rst
 
-.. code-block:: console
+You can quickly learn how to use this extension from :doc:`quickstart`.
 
-   $ pip install sphinxnotes-isso
+Contents
+========
 
-Add extension to :file:`conf.py` in your sphinx project:
+.. toctree::
+   :caption: Contents
 
-.. code-block:: python
+   quickstart
+   install
+   usage
+   conf
+   changelog
+   
 
-    extensions = [
-              # …
-              'sphinxnotes.isso',
-              # …
-              ]
+The Sphinx Notes Project
+========================
 
-Configuration
-=============
+This project is a developed by `Shengyu Zhang`__,
+as part of **The Sphinx Notes Project**.
 
-:isso_url: HTTP URL points to your Isso server
+.. toctree::
+   :caption: The Sphinx Notes Project
 
-The following configuration items are corresponding to `Isso Client Configuration`_ ,
-please use Python's boolean, numeric value instead of string formatted value.
+   Home <https://sphinx.silverrainz.me/>
+   Blog <https://silverrainz.me/blog/category/sphinx.html>
+   PyPI <https://pypi.org/search/?q=sphinxnotes>
 
-- isso_css
-- isso_lang
-- isso_reply_to_self
-- isso_require_author
-- isso_require_email
-- isso_max_comments_top
-- isso_max_comments_nested
-- isso_reveal_on_click
-- isso_avatar
-- isso_avatar_bg
-- isso_avatar_fg
-- isso_vote
-- isso_vote_levels
-- isso_feed
-
-.. _Isso Client Configuration: https://posativ.org/isso/docs/configuration/client/
-
-Functionalities
-===============
-
-The ``isso`` directive is used to insert a isso comment box.
-The docname of current document is used as Isso thread ID.
-
-The directive supports the following options:
-
-:id: (text)
-    Specify a thread ID rather than use docname
-:title: (text)
-    Specify a thread title rather than use document title
-
-The comment box at the top is generated via the following source:
-
-.. code-block:: rst
-
-   .. isso::
-
-Change Log
-==========
-
-2021-04-21 1.0
---------------
-
-.. sectionauthor:: Shengyu Zhang
-
-- Use document title as Isso thread title
-
-2021-03-23 1.0a2
-----------------
-
-.. sectionauthor:: Shengyu Zhang
-
-- Fixes: Thread ID should starts with slash
-
-2021-03-13 1.0a1
-----------------
-
-.. sectionauthor:: Shengyu Zhang
-
-The first version is out, enjoy~
-
+__ https://github.com/SilverRainZ

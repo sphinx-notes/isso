@@ -1,33 +1,29 @@
+# This file is generated from sphinx-notes/template. DO NOT EDIT.
+#
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-# -- Path setup --------------------------------------------------------------
+import os
+import sys
+
+# -- Project information -----------------------------------------------------
+
+project = 'sphinxnotes-isso'
+author = 'Shengyu Zhang'
+copyright = "2023, " + author
+
+# The full version, including alpha/beta/rc tags
+version = release = '1.0-5-ga40c37d'
+
+# -- General configuration ---------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#
-import os
-import sys
-from datetime import datetime
-# Import proj's meta info
-sys.path.insert(0, os.path.abspath('../sphinxnotes'))
-import isso as proj
-
-# -- Project information -----------------------------------------------------
-
-project = proj.__title__
-author = proj.__author__
-copyright = '%s, %s' % (datetime.now().year, author)
-
-# The full version, including alpha/beta/rc tags
-version = release = proj.__version__
-
-
-# -- General configuration ---------------------------------------------------
+sys.path.insert(0, os.path.abspath('../src/sphinxnotes'))
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -61,20 +57,22 @@ show_authors = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'furo'
 
-html_theme_options = {
-    'nosidebar': True,
-}
-
+html_theme_options = {}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_theme_options = {
+    "source_repository": "https://github.com/sphinx-notes/isso/",
+    "source_branch": "master",
+    "source_directory": "docs/",
+}
 
 # The URL which points to the root of the HTML documentation.
 # It is used to indicate the location of document like canonical_url
-html_baseurl = 'https://sphinx-notes.github.io/isso'
+html_baseurl = 'https://sphinx.silverrainz.me/isso'
 
 html_logo = html_favicon = '_images/sphinx-notes.png'
