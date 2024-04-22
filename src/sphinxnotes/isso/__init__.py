@@ -131,9 +131,9 @@ def on_html_page_context(app:Sphinx, pagename:str, templatename:str, context,
 
 
 def setup(app:Sphinx):
-    app.add_config_value('isso_url', None, {})
+    app.add_config_value('isso_url', None, '')
     for cfg in CONFIG_ITEMS:
-        app.add_config_value(cfg, None, {})
+        app.add_config_value(cfg, None, '')
     app.add_directive('isso', IssoDirective)
     app.add_node(IssoNode, html=(IssoNode.visit, IssoNode.depart))
     app.connect('html-page-context', on_html_page_context)
