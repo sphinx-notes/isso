@@ -1,4 +1,5 @@
-.. This file is generated from sphinx-notes/template. DO NOT EDIT.
+.. This file is generated from sphinx-notes/cookiecutter.
+   You need to consider modifying the TEMPLATE or modifying THIS FILE.
 
 ================
 sphinxnotes-isso
@@ -16,7 +17,7 @@ sphinxnotes-isso
    :target: https://pypi.python.org/pypi/sphinxnotes-isso
    :alt: PyPI Package
 
-.. image:: https://img.shields.io/pypi/dw/sphinxnotes-isso
+.. image:: https://img.shields.io/pypi/dm/sphinxnotes-isso
    :target: https://pypi.python.org/pypi/sphinxnotes-isso
    :alt: PyPI Package Downloads
 

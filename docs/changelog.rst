@@ -1,24 +1,34 @@
+.. This file is generated from sphinx-notes/cookiecutter.
+   You need to consider modifying the TEMPLATE or modifying THIS FILE.
+
 ==========
 Change Log
 ==========
 
-2021-04-21 1.0
---------------
+.. Example:
 
-.. sectionauthor:: Shengyu Zhang
+   1.0.0
+   =====
 
-- Use document title as Isso thread title
+   .. version:: _
+      :date: yyyy-mm-dd
 
-2021-03-23 1.0a2
-----------------
+      Change log here.
 
-.. sectionauthor:: Shengyu Zhang
+Version 1.x
+===========
 
-- Fixes: Thread ID should starts with slash
+.. version:: 1.0
+   :date: 2021-04-21
 
-2021-03-13 1.0a1
-----------------
+   - Use document title as Isso thread title
 
-.. sectionauthor:: Shengyu Zhang
+.. version:: 1.0a2
+   :date: 2021-03-23
 
-The first version is out, enjoy~
+   - Fixes: Thread ID should starts with slash
+
+.. version:: 1.0a1
+   :date: 2021-03-13
+
+   The first version is out, enjoy~
