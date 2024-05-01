@@ -2,8 +2,6 @@
 Usage
 =====
 
-.. note:: Before using the extension, you should have an Isso__ instance deployed.
-
 The ``isso`` directive is used to insert a Isso comment box.
 The docname of current document is used as Isso thread ID.
 

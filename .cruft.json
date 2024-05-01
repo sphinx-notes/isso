@@ -1,0 +1,21 @@
+{
+  "template": "https://github.com/sphinx-notes/cookiecutter",
+  "commit": "1701bf78ca498d756ce4502aa1712cfe23ed35af",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "namespace": "sphinxnotes",
+      "name": "isso",
+      "full_name": "sphinxnotes-isso",
+      "author": "Shengyu Zhang",
+      "description": "Sphinx extension for embeding Isso comments in documents",
+      "version": "1.0",
+      "github_owner": "sphinx-notes",
+      "github_repo": "isso",
+      "pypi_name": "sphinxnotes-isso",
+      "pypi_owner": "SilverRainZ",
+      "_template": "https://github.com/sphinx-notes/cookiecutter"
+    }
+  },
+  "directory": null
+}

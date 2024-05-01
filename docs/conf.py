@@ -1,5 +1,6 @@
-# This file is generated from sphinx-notes/template. DO NOT EDIT.
-#
+# This file is generated from sphinx-notes/cookiecutter.
+# You need to consider modifying the TEMPLATE or modifying THIS FILE.
+
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -13,27 +14,21 @@ import sys
 
 project = 'sphinxnotes-isso'
 author = 'Shengyu Zhang'
-copyright = "2023, " + author
+copyright = "2024, " + author
 
 # The full version, including alpha/beta/rc tags
-version = release = '1.0-5-ga40c37d'
+version = release = '1.0'
 
 # -- General configuration ---------------------------------------------------
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.insert(0, os.path.abspath('../src/sphinxnotes'))
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
     'sphinx.ext.githubpages',
-    'isso',
+    'sphinx_design',
+    'sphinx_copybutton',
 ]
-
-isso_url = 'https://comments.silverrainz.me:30501'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -75,4 +70,75 @@ html_theme_options = {
 # It is used to indicate the location of document like canonical_url
 html_baseurl = 'https://sphinx.silverrainz.me/isso'
 
-html_logo = html_favicon = '_images/sphinx-notes.png'
+html_logo = html_favicon = '_static/sphinx-notes.png'
+
+# -- Extensions -------------------------------------------------------------
+
+#  
+extensions.append('sphinxnotes.any')
+from sphinxnotes.any import Schema, Field as F
+#
+version_schema = Schema('version',
+                        name=F(unique=True, referenceable=True, required=True, form=F.Form.LINES),
+                        attrs={'date': F(referenceable=True)},
+                        content=F(form=F.Form.LINES),
+                        description_template=open('_templates/version.rst', 'r').read(),
+                        reference_template='🏷️{{ title }}',
+                        missing_reference_template='🏷️{{ title }}',
+                        ambiguous_reference_template='🏷️{{ title }}')
+confval_schema = Schema('confval',
+                        name=F(unique=True, referenceable=True, required=True, form=F.Form.LINES),
+                        attrs={
+                            'type': F(),
+                            'default': F(),
+                            'choice': F(form=F.Form.WORDS),
+                            'versionadded': F(),
+                            'versionchanged': F(form=F.Form.LINES),
+                        },
+                        content=F(),
+                        description_template=open('_templates/confval.rst', 'r').read(),
+                        reference_template='⚙️{{ title }}',
+                        missing_reference_template='⚙️{{ title }}',
+                        ambiguous_reference_template='⚙️{{ title }}')
+example_schema = Schema('example',
+                        name=F(referenceable=True),
+                        attrs={'style': F()},
+                        content=F(form=F.Form.LINES),
+                        description_template=open('_templates/example.rst', 'r').read(),
+                        reference_template='📝{{ title }}',
+                        missing_reference_template='📝{{ title }}',
+                        ambiguous_reference_template='📝{{ title }}')
+#
+any_schemas = [
+    version_schema,
+    confval_schema,
+    example_schema,
+]
+primary_domain = 'any'
+# 
+
+extensions.append('sphinx.ext.extlinks')
+extlinks = {
+    'issue': ('https://github.com/sphinx-notes/isso/issues/%s', '💬%s'),
+    'pull': ('https://github.com/sphinx-notes/isso/pull/%s', '🚀%s'),
+    'tag': ('https://github.com/sphinx-notes/isso/releases/tag/%s', '🏷️%s'),
+}
+
+extensions.append('sphinxcontrib.gtagjs')
+gtagjs_ids = ['G-E4SNX0WZYV']
+
+#  
+# -- Eat your own dog food --------------------------------------------------
+
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
+sys.path.insert(0, os.path.abspath('../src/sphinxnotes'))
+extensions.append('isso')
+
+# DOG FOOD CONFIGURATION START
+
+isso_url = 'https://comments.silverrainz.me:30501'
+
+# DOG FOOD CONFIGURATION END
+# 

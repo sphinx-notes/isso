@@ -1,13 +1,64 @@
-.. This file is generated from sphinx-notes/template. DO NOT EDIT.
+.. This file is generated from sphinx-notes/cookiecutter.
+   You need to consider modifying the TEMPLATE or modifying THIS FILE.
 
 .. include:: ../README.rst
 
 Introduction
 ============
 
-.. include:: intro_for_index.rst
+.. ADDITIONAL CONTENT START
 
-You can quickly learn how to use this extension from :doc:`quickstart`.
+The extension allows your embedding Isso_ comments in your Sphinx documentation:
+
+.. _Isso: https://isso-comments.de/
+
+.. ADDITIONAL CONTENT END
+
+Getting Started
+===============
+
+.. note::
+
+   We assume you already have a Sphinx documentation,
+   if not, see `Getting Started with Sphinx`_.
+
+First, downloading extension from PyPI:
+
+.. code-block:: console
+
+   $ pip install sphinxnotes-isso
+
+Then, add the extension name to ``extensions`` configuration item in your conf.py_:
+
+.. code-block:: python
+
+   extensions = [
+             # …
+             'sphinxnotes.isso',
+             # …
+             ]
+
+.. _Getting Started with Sphinx: https://www.sphinx-doc.org/en/master/usage/quickstart.html
+.. _conf.py: https://www.sphinx-doc.org/en/master/usage/configuration.html
+
+.. ADDITIONAL CONTENT START
+
+Set :confval:`isso_url` to the URL of your Isso server.
+
+.. code-block:: python
+
+   isso_url = 'https://HOST:PORT'
+
+And then you can use directive ``isso`` to insert a Isso comment box, see
+:doc:`usage` for more details.
+
+.. example::
+
+   .. isso::
+
+Feel free to comment~
+
+.. ADDITIONAL CONTENT END
 
 Contents
 ========
@@ -15,17 +66,14 @@ Contents
 .. toctree::
    :caption: Contents
 
-   quickstart
-   install
    usage
    conf
    changelog
-   
 
 The Sphinx Notes Project
 ========================
 
-This project is a developed by `Shengyu Zhang`__,
+The project is developed by `Shengyu Zhang`__,
 as part of **The Sphinx Notes Project**.
 
 .. toctree::
