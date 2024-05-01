@@ -18,6 +18,12 @@ Change Log
 Version 1.x
 ===========
 
+.. version:: 1.1
+   :date: 2024-05-01
+
+   - Re-org project with https://github.com/sphinx-notes/cookiecutter (:pull:`1`, :pull:`4`)
+   - Fix for sphinx 7.3+: change rebuild argument in option to empty string (:pull:`3`)
+
 .. version:: 1.0
    :date: 2021-04-21
 

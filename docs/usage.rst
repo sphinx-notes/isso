@@ -11,11 +11,3 @@ The directive supports the following options:
     Specify a thread ID rather than use docname
 :title: (text)
     Specify a thread title rather than use document title
-
-The comment box can be generated via the following source:
-
-.. code-block:: rst
-
-   .. isso::
-
-__ https://isso-comments.de/
