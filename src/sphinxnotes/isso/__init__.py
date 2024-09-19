@@ -14,7 +14,9 @@ from typing import TYPE_CHECKING, Any, Tuple
 import posixpath
 
 from docutils import nodes
-from docutils.parsers.rst import directives, Directive
+from docutils.parsers.rst import directives
+from sphinx.util.docutils import SphinxDirective
+from sphinx.writers.html5 import HTML5Translator
 
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
@@ -51,24 +53,38 @@ def ext_config_to_isso_config(key:str, value:Any) -> Tuple[str,str]:
     return (key, value)
 
 
-class IssoNode(nodes.General, nodes.Element):
+class IssoNode(nodes.General, nodes.Element): pass
 
-    @staticmethod
-    def visit(self, node):
-        kwargs = {
-            'data-isso-id': node['thread-id'],
-        }
-        if node.get('thread-title'):
-            kwargs['data-title'] = node['thread-title']
-        self.body.append(self.starttag(node, 'section', '', **kwargs))
+def html_visit_isso_node(self: HTML5Translator, node):
+    docname = node['docname']
+    metadata = self.builder.env.metadata[docname]
+
+    # If docinfo :nocomments: is set, won’t display a comment form for a page
+    # generated from this source file.
+    #
+    # See: https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html
+    if 'nocomments' in metadata:
+        raise nodes.SkipNode
+
+    thread_id = node.get('thread-id') or \
+        metadata.get('isso-id') or \
+        '/' + docname
+    if not thread_id.startswith('/'):
+        logger.warning(f'isso thread-id {thread_id} doesn\'t start with slash', location=node)
+
+    kwargs = {
+        'data-isso-id': thread_id,
+    }
+    if node.get('thread-title'):
+        kwargs['data-title'] = node['thread-title']
+    self.body.append(self.starttag(node, 'section', '', **kwargs))
 
 
-    @staticmethod
-    def depart(self, _):
-        self.body.append('</section>')
+def html_depart_isso_oode(self: HTML5Translator, _):
+    self.body.append('</section>')
 
 
-class IssoDirective(Directive):
+class IssoDirective(SphinxDirective):
     """Isso ".. isso::" rst directive."""
 
     option_spec = {
@@ -84,16 +100,17 @@ class IssoDirective(Directive):
 
         node = IssoNode()
         node['ids'] = ['isso-thread']
+        # Save docname for later looking up :attr:`self.env.metadata`, 
+        # which is not yet available now.
+        node['docname'] = self.env.docname
+
         if self.options.get('id'):
-            thread_id = self.options.get('id')
-            if not thread_id.startswith('/'):
-                logger.warning('isso thread-id should starts with slash', location=node)
-            node['thread-id'] = thread_id
-        else:
-            node['thread-id'] = '/' + self.state.document.settings.env.docname
+            node['thread-id'] = self.options.get('id')
+
         if self.options.get('title'):
             node['thread-title'] = self.options.get('title')
         else:
+            # TODO: support section title?
             title = self.state.document.next_node(nodes.title)
             if title:
                 node['thread-title'] = title.astext()
@@ -135,7 +152,7 @@ def setup(app:Sphinx):
     for cfg in CONFIG_ITEMS:
         app.add_config_value(cfg, None, '')
     app.add_directive('isso', IssoDirective)
-    app.add_node(IssoNode, html=(IssoNode.visit, IssoNode.depart))
+    app.add_node(IssoNode, html=(html_visit_isso_node, html_depart_isso_oode))
     app.connect('html-page-context', on_html_page_context)
 
     return {'version': __version__}
