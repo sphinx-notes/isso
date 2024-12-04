@@ -1,12 +1,12 @@
 """
-    sphinxnotes.isso
-    ~~~~~~~~~~~~~~~~
+sphinxnotes.isso
+~~~~~~~~~~~~~~~~
 
-    This extension is modified from sphinxcontrib-disqus.
+This extension is modified from sphinxcontrib-disqus.
 
-    :copyright: Copyright 2021 Shengyu Zhang
-    :copyright: Copyright 2016 Robpol86
-    :license: BSD, see LICENSE for details.
+:copyright: Copyright 2021 Shengyu Zhang
+:copyright: Copyright 2016 Robpol86
+:license: BSD, see LICENSE for details.
 """
 
 from __future__ import annotations
@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     from sphinx.application import Sphinx
 from sphinx.util import logging
 
-__title__= 'sphinxnotes-isso'
+__title__ = 'sphinxnotes-isso'
 __license__ = 'BSD'
 __version__ = '1.0'
 __author__ = 'Shengyu Zhang'
@@ -32,16 +32,27 @@ __keywords__ = 'documentation, sphinx, extension, comment, isso, disqus'
 
 # Isso client configuration items
 # https://posativ.org/isso/docs/configuration/client/
-CONFIG_ITEMS = ['isso_css', 'isso_lang', 'isso_reply_to_self',
-             'isso_require_author', 'isso_require_email',
-             'isso_max_comments_top', 'isso_max_comments_nested',
-             'isso_reveal_on_click', 'isso_avatar', 'isso_avatar_bg',
-             'isso_avatar_fg', 'isso_vote', 'isso_vote_levels',
-             'isso_feed']
+CONFIG_ITEMS = [
+    'isso_css',
+    'isso_lang',
+    'isso_reply_to_self',
+    'isso_require_author',
+    'isso_require_email',
+    'isso_max_comments_top',
+    'isso_max_comments_nested',
+    'isso_reveal_on_click',
+    'isso_avatar',
+    'isso_avatar_bg',
+    'isso_avatar_fg',
+    'isso_vote',
+    'isso_vote_levels',
+    'isso_feed',
+]
 
 logger = logging.getLogger(__name__)
 
-def ext_config_to_isso_config(key:str, value:Any) -> Tuple[str,str]:
+
+def ext_config_to_isso_config(key: str, value: Any) -> Tuple[str, str]:
     assert key in CONFIG_ITEMS
     key = 'data-' + key.replace('_', '-')
     if isinstance(value, str):
@@ -53,7 +64,9 @@ def ext_config_to_isso_config(key:str, value:Any) -> Tuple[str,str]:
     return (key, value)
 
 
-class IssoNode(nodes.General, nodes.Element): pass
+class IssoNode(nodes.General, nodes.Element):
+    pass
+
 
 def html_visit_isso_node(self: HTML5Translator, node):
     docname = node['docname']
@@ -66,11 +79,11 @@ def html_visit_isso_node(self: HTML5Translator, node):
     if 'nocomments' in metadata:
         raise nodes.SkipNode
 
-    thread_id = node.get('thread-id') or \
-        metadata.get('isso-id') or \
-        '/' + docname
+    thread_id = node.get('thread-id') or metadata.get('isso-id') or '/' + docname
     if not thread_id.startswith('/'):
-        logger.warning(f'isso thread-id {thread_id} doesn\'t start with slash', location=node)
+        logger.warning(
+            f"isso thread-id {thread_id} doesn't start with slash", location=node
+        )
 
     kwargs = {
         'data-isso-id': thread_id,
@@ -100,7 +113,7 @@ class IssoDirective(SphinxDirective):
 
         node = IssoNode()
         node['ids'] = ['isso-thread']
-        # Save docname for later looking up :attr:`self.env.metadata`, 
+        # Save docname for later looking up :attr:`self.env.metadata`,
         # which is not yet available now.
         node['docname'] = self.env.docname
 
@@ -118,8 +131,9 @@ class IssoDirective(SphinxDirective):
         return [node]
 
 
-def on_html_page_context(app:Sphinx, pagename:str, templatename:str, context,
-                         doctree:nodes.document) -> None:
+def on_html_page_context(
+    app: Sphinx, pagename: str, templatename: str, context, doctree: nodes.document
+) -> None:
     """Called when the HTML builder has created a context dictionary to render a template with.
 
     Conditionally adding isso client script to <head /> if the directive is used in a page.
@@ -140,14 +154,14 @@ def on_html_page_context(app:Sphinx, pagename:str, templatename:str, context,
         }
         for cfg in CONFIG_ITEMS:
             val = getattr(app.config, cfg)
-            if val is not None: # Maybe 0, False, '' or anything
+            if val is not None:  # Maybe 0, False, '' or anything
                 issocfg, issoval = ext_config_to_isso_config(cfg, val)
                 kwargs[issocfg] = issoval
         js_path = posixpath.join(app.config.isso_url, 'js/embed.min.js')
         app.add_js_file(js_path, **kwargs)
 
 
-def setup(app:Sphinx):
+def setup(app: Sphinx):
     app.add_config_value('isso_url', None, '')
     for cfg in CONFIG_ITEMS:
         app.add_config_value(cfg, None, '')
