@@ -38,6 +38,8 @@ dev = [
     "build",
     "twine",
     "cruft",
+    "ruff",
+    "pre-commit"
 ]
 test = [
     "pytest",
@@ -48,6 +50,7 @@ docs = [
     "sphinx_design",
     "sphinx_copybutton",
     "sphinxcontrib-gtagjs",
+    "sphinxnotes-comboroles",
 ]
 
 [project.urls]
