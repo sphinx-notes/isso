@@ -29,7 +29,7 @@ end of every source file. For example:
 Disable comments for specified document
 ---------------------------------------
 
-This extension respects the ``:nocomment`` docinfo__:
+This extension respects the ``:nocomments`` docinfo__:
 
    If set, the web application won’t display a comment form for a page generated
    from this source file.

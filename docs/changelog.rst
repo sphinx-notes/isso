@@ -25,7 +25,7 @@ Version 1.x
 .. version:: 1.2
    :date: 2024-09-19
 
-   - Skip document with ``:nocomment:`` docinfos (:pull:`5`)
+   - Skip document with ``:nocomments:`` docinfos (:pull:`5`)
    - Allow user specifying Isso thread ID via ``:isso-id:`` docinfo (:pull:`5`)
 
 .. version:: 1.1
