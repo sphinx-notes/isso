@@ -28,9 +28,15 @@ Introduction
 
 .. INTRODUCTION START
 
-The extension allows your embedding Isso_ comments in your Sphinx documentation:
+The extension allows your embedding Isso_ comments in your Sphinx documentation.
+
+.. note::
+
+   Before using this extension, you should already have an Isso server deployed
+   (`How to deploy a Isso server?`_) and an accessible URL.
 
 .. _Isso: https://isso-comments.de/
+.. _How to deploy a Isso server?: https://isso-comments.de/docs/reference/server-config/
 
 .. INTRODUCTION END
 
@@ -64,18 +70,29 @@ Then, add the extension name to ``extensions`` configuration item in your
 
 .. ADDITIONAL CONTENT START
 
-Set :confval:`isso_url` to the URL of your Isso server.
+Set :confval:`isso_url` to the URL of your Isso server
+(`How to deploy a Isso server?`_):
 
 .. code-block:: python
 
    isso_url = 'https://HOST:PORT'
 
-And then you can use directive ``isso`` to insert a Isso comment box, see
-:doc:`usage` for more details.
+There are two ways to add a comment thread to documentation:
 
-.. example::
+1. Use the :confval:`isso_include_patterns` configuration item. For exampele:
 
-   .. isso::
+   .. code:: python
+
+      # Enable commenting for all documents
+      isso_include_patterns = ['**']
+
+2. Use the :rst:dir:`isso` directive, this will only affect the current document.
+
+   .. rst-example::
+
+      .. isso::
+
+See :doc:`usage` for more details.
 
 Feel free to comment~
 

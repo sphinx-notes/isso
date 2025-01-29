@@ -10,86 +10,52 @@ This extension is modified from sphinxcontrib-disqus.
 """
 
 from __future__ import annotations
-from typing import TYPE_CHECKING, Any, Tuple
+from typing import TYPE_CHECKING
 import posixpath
+from importlib.metadata import version
 
 from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx.util.docutils import SphinxDirective
 from sphinx.writers.html5 import HTML5Translator
+from sphinx.transforms import SphinxTransform
+from sphinx.util.matching import patmatch
+
 
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
+    from sphinx.environment import BuildEnvironment
 from sphinx.util import logging
 
-__title__ = 'sphinxnotes-isso'
-__license__ = 'BSD'
-__version__ = '1.0'
-__author__ = 'Shengyu Zhang'
-__url__ = 'https://sphinx-notes.github.io/isso'
-__description__ = 'Sphinx extension for embeding Isso comments in documents'
-__keywords__ = 'documentation, sphinx, extension, comment, isso, disqus'
-
-# Isso client configuration items
-# https://posativ.org/isso/docs/configuration/client/
-CONFIG_ITEMS = [
-    'isso_css',
-    'isso_lang',
-    'isso_reply_to_self',
-    'isso_require_author',
-    'isso_require_email',
-    'isso_max_comments_top',
-    'isso_max_comments_nested',
-    'isso_reveal_on_click',
-    'isso_avatar',
-    'isso_avatar_bg',
-    'isso_avatar_fg',
-    'isso_vote',
-    'isso_vote_levels',
-    'isso_feed',
-]
 
 logger = logging.getLogger(__name__)
 
 
-def ext_config_to_isso_config(key: str, value: Any) -> Tuple[str, str]:
-    assert key in CONFIG_ITEMS
-    key = 'data-' + key.replace('_', '-')
-    if isinstance(value, str):
-        pass
-    elif isinstance(value, bool):
-        value = str(value).lower()
-    else:
-        value = str(value)
-    return (key, value)
-
-
 class IssoNode(nodes.General, nodes.Element):
-    pass
+    def setup(
+        self,
+        env: BuildEnvironment,
+        docname: str,
+        id_: str | None = None,
+        title: str | None = None,
+        rawsource: str = '',
+    ):
+        self['thread-id'] = id_ or env.metadata[docname].get('isso-id') or '/' + docname
+        self['thread-title'] = title or env.titles.get(docname, nodes.title()).astext()
+        self['rawsource'] = rawsource
 
 
 def html_visit_isso_node(self: HTML5Translator, node):
-    docname = node['docname']
-    metadata = self.builder.env.metadata[docname]
-
-    # If docinfo :nocomments: is set, won’t display a comment form for a page
-    # generated from this source file.
-    #
-    # See: https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html
-    if 'nocomments' in metadata:
-        raise nodes.SkipNode
-
-    thread_id = node.get('thread-id') or metadata.get('isso-id') or '/' + docname
-    if not thread_id.startswith('/'):
+    if not node['thread-id'].startswith('/'):
         logger.warning(
-            f"isso thread-id {thread_id} doesn't start with slash", location=node
+            f"isso thread-id {node['thread-id']} doesn't start with slash",
+            location=node,
         )
 
     kwargs = {
-        'data-isso-id': thread_id,
+        'data-isso-id': node['thread-id'],
+        'data-title': node['thread-title'],
     }
-    if node.get('thread-title'):
-        kwargs['data-title'] = node['thread-title']
     self.body.append(self.starttag(node, 'section', '', **kwargs))
 
 
@@ -98,36 +64,21 @@ def html_depart_isso_oode(self: HTML5Translator, _):
 
 
 class IssoDirective(SphinxDirective):
-    """Isso ".. isso::" rst directive."""
-
+    optional_arguments = 1  # Isso thread ID
     option_spec = {
-        'id': directives.unchanged,
-        'title': directives.unchanged,
+        'title': directives.unchanged,  # Isso thread title
     }
 
     def run(self):
-        """Executed by Sphinx.
-        :returns: Single IssoNode instance with config values passed as arguments.
-        :rtype: list
-        """
-
         node = IssoNode()
-        node['ids'] = ['isso-thread']
-        # Save docname for later looking up :attr:`self.env.metadata`,
-        # which is not yet available now.
-        node['docname'] = self.env.docname
-
-        if self.options.get('id'):
-            node['thread-id'] = self.options.get('id')
-
-        if self.options.get('title'):
-            node['thread-title'] = self.options.get('title')
-        else:
-            # TODO: support section title?
-            title = self.state.document.next_node(nodes.title)
-            if title:
-                node['thread-title'] = title.astext()
-
+        node.setup(
+            self.env,
+            self.env.docname,
+            id_=self.arguments[0] if self.arguments else None,
+            title=self.options.get('title'),
+            rawsource=self.block_text,
+        )
+        self.set_source_info(node)
         return [node]
 
 
@@ -144,29 +95,87 @@ def on_html_page_context(
     :param dict context: Jinja2 HTML context.
     :param docutils.nodes.document doctree: Tree of docutils nodes.
     """
-    # Only embed comments for documents
     if not doctree:
         return
-    # We supports embed mulitple comments box in same document
-    for node in doctree.traverse(IssoNode):
-        kwargs = {
-            'data-isso': app.config.isso_url,
-        }
-        for cfg in CONFIG_ITEMS:
-            val = getattr(app.config, cfg)
-            if val is not None:  # Maybe 0, False, '' or anything
-                issocfg, issoval = ext_config_to_isso_config(cfg, val)
-                kwargs[issocfg] = issoval
-        js_path = posixpath.join(app.config.isso_url, 'js/embed.min.js')
-        app.add_js_file(js_path, **kwargs)
+    if doctree.next_node(IssoNode) is None:
+        # No comment thread, skip.
+        return
+
+    kwargs = {
+        'data-isso': app.config.isso_url,
+        **app.config.isso_client_config,
+    }
+    js_path = posixpath.join(app.config.isso_url, 'js/embed.min.js')
+    app.add_js_file(js_path, **kwargs)
+
+
+class IssoTransform(SphinxTransform):
+    """Append isso comment thread to document."""
+
+    default_priority = 200
+
+    def apply(self, **kwargs) -> None:
+        docname = self.env.path2doc(self.document['source'])
+        # Generated page has no docname, skip it.
+        if docname is None:
+            return
+
+        # If docinfo :nocomments: is set, won’t display comment thread.
+        # See: https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html
+        # TODO: support no-comments?
+        metadata = self.env.metadata[docname]
+        if 'nocomments' in metadata:
+            return
+
+        # Filter docname by patterns.
+        exclude = [patmatch(docname, p) for p in self.config.isso_exclude_patterns]
+        include = not exclude and [
+            patmatch(docname, p) for p in self.config.isso_include_patterns
+        ]
+        if include:
+            node = IssoNode()
+            node.setup(self.env, docname)
+            self.document += node
+
+        all_isso_nodes = list(self.document.traverse(IssoNode))
+        if len(all_isso_nodes) == 0:
+            return
+        if len(all_isso_nodes) > 1:
+            logger.warning(f'{len(all_isso_nodes)} isso nodes found, only 1 is allowed')
+
+        # Replace extra isso nodes (except last one) with system_message.
+        for n in all_isso_nodes[:-1]:
+            msg = 'Only one Isso thread is allowed in one document'
+            rawsrc = nodes.literal_block(n['rawsource'], n['rawsource'])
+            sm = nodes.system_message(
+                msg,
+                rawsrc,
+                type='WARNING',
+                level=2,
+                backrefs=[],
+                source=n.source,
+                line=n.line,
+            )
+            n.replace_self(sm)
+
+        # To identify comment thread.
+        all_isso_nodes[-1]['ids'] = ['isso-thread']
 
 
 def setup(app: Sphinx):
     app.add_config_value('isso_url', None, '')
-    for cfg in CONFIG_ITEMS:
-        app.add_config_value(cfg, None, '')
+    app.add_config_value('isso_client_config', {}, '')
+    app.add_config_value('isso_include_patterns', [], '')
+    app.add_config_value('isso_exclude_patterns', [], '')
+
     app.add_directive('isso', IssoDirective)
     app.add_node(IssoNode, html=(html_visit_isso_node, html_depart_isso_oode))
+    app.add_transform(IssoTransform)
+
     app.connect('html-page-context', on_html_page_context)
 
-    return {'version': __version__}
+    return {
+        'version': version('sphinxnotes.isso'),
+        'parallel_read_safe': True,
+        "parallel_write_safe": True,
+    }
