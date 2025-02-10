@@ -19,6 +19,17 @@ Change Log
 
    Change log here.
 
+Version 2.x
+===========
+
+.. version:: 2.0
+   :date: 2025-02
+
+   - Add :confval:`isso_include_patterns` and :confval:`isso_exclude_patterns`
+     for automaticlly inserting comment thread to the end of document (:pull:`10`)
+   - INCOMPATIBLE CHANGES: Remove the ``:id:`` option of :rst:dir:`isso` directive
+     (:pull:`10`)
+
 Version 1.x
 ===========
 

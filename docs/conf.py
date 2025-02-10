@@ -74,49 +74,6 @@ html_logo = html_favicon = '_static/sphinx-notes.png'
 
 # -- Extensions -------------------------------------------------------------
 
-#  
-extensions.append('sphinxnotes.any')
-from sphinxnotes.any import Schema, Field as F
-#
-version_schema = Schema('version',
-                        name=F(unique=True, referenceable=True, required=True, form=F.Form.LINES),
-                        attrs={'date': F(referenceable=True)},
-                        content=F(form=F.Form.LINES),
-                        description_template=open('_templates/version.rst', 'r').read(),
-                        reference_template='🏷️{{ title }}',
-                        missing_reference_template='🏷️{{ title }}',
-                        ambiguous_reference_template='🏷️{{ title }}')
-confval_schema = Schema('confval',
-                        name=F(unique=True, referenceable=True, required=True, form=F.Form.LINES),
-                        attrs={
-                            'type': F(),
-                            'default': F(),
-                            'choice': F(form=F.Form.WORDS),
-                            'versionadded': F(),
-                            'versionchanged': F(form=F.Form.LINES),
-                        },
-                        content=F(),
-                        description_template=open('_templates/confval.rst', 'r').read(),
-                        reference_template='⚙️{{ title }}',
-                        missing_reference_template='⚙️{{ title }}',
-                        ambiguous_reference_template='⚙️{{ title }}')
-example_schema = Schema('example',
-                        name=F(referenceable=True),
-                        attrs={'style': F()},
-                        content=F(form=F.Form.LINES),
-                        description_template=open('_templates/example.rst', 'r').read(),
-                        reference_template='📝{{ title }}',
-                        missing_reference_template='📝{{ title }}',
-                        ambiguous_reference_template='📝{{ title }}')
-#
-any_schemas = [
-    version_schema,
-    confval_schema,
-    example_schema,
-]
-primary_domain = 'any'
-# 
-
 extensions.append('sphinx.ext.extlinks')
 extlinks = {
     'issue': ('https://github.com/sphinx-notes/isso/issues/%s', '💬%s'),
@@ -138,14 +95,14 @@ intersphinx_mapping = {
     'jinja': ('https://jinja.palletsprojects.com/en/latest/', None),
 }
 
-# 
 extensions.append('sphinxnotes.comboroles')
 comboroles_roles = {
     'parsed_literal': (['literal'], True),
 }
-#
 
-#  
+extensions.append('sphinxnotes.project')
+primary_domain = 'any'
+
 # -- Eat your own dog food --------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -159,4 +116,3 @@ extensions.append('isso')
 isso_url = 'https://comments.silverrainz.me:30501'
 
 # DOG FOOD CONFIGURATION END
-# 

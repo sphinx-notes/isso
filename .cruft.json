@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/sphinx-notes/cookiecutter",
-  "commit": "c4f14dab2840eeff6352647a923642b6377d1f49",
+  "commit": "e9395e52b94aa56ef6e2e309df6ef3c2ab877b43",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -14,7 +14,8 @@
       "github_repo": "isso",
       "pypi_name": "sphinxnotes-isso",
       "pypi_owner": "SilverRainZ",
-      "_template": "https://github.com/sphinx-notes/cookiecutter"
+      "_template": "https://github.com/sphinx-notes/cookiecutter",
+      "_commit": "e9395e52b94aa56ef6e2e309df6ef3c2ab877b43"
     }
   },
   "directory": null

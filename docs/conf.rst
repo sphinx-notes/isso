@@ -6,22 +6,36 @@ Configuration
 
    HTTP URL points to your Isso server.
 
-The following configuration items are corresponding to `Isso Client Configuration`_,
-please use Python's boolean, numeric value instead of string formatted value.
 
-- ``isso_css``
-- ``isso_lang``
-- ``isso_reply_to_self``
-- ``isso_require_author``
-- ``isso_require_email``
-- ``isso_max_comments_top``
-- ``isso_max_comments_nested``
-- ``isso_reveal_on_click``
-- ``isso_avatar``
-- ``isso_avatar_bg``
-- ``isso_avatar_fg``
-- ``isso_vote``
-- ``isso_vote_levels``
-- ``isso_feed``
+.. confval:: isso_client_config
 
-.. _Isso Client Configuration: https://posativ.org/isso/docs/configuration/client/
+   A mapping that corresponding to `Isso Client Configuration`_.
+
+   .. versionadded:: 2.0
+
+   .. _Isso Client Configuration: https://posativ.org/isso/docs/configuration/client/
+
+
+.. confval:: isso_exclude_patterns
+   type: list[str]
+   default: []
+
+   A list of `glob-style patterns`_ that should be excluded when inserting Isso
+   comment thread.
+   They are matched against the document name (docname).
+   :confval:`isso_exclude_patterns` has priority over :confval:`isso_include_patterns`.
+
+   .. versionadded:: 2.0
+
+   .. _glob-style patterns: https://www.sphinx-doc.org/en/master/usage/configuration.html#glob-style-patterns
+
+
+.. confval:: isso_include_patterns
+   type: list[str]
+   default: []
+
+   A list of `glob-style patterns`_ that are used to insert Isso comment thread.
+   They are matched against the document name (docname).
+   :confval:`isso_exclude_patterns` has priority over :confval:`isso_include_patterns`.
+
+   .. versionadded:: 2.0

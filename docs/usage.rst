@@ -2,36 +2,68 @@
 Usage
 =====
 
-The ``isso`` directive is used to insert a Isso comment box.
-Each comment thread is distinguished by Isso Thread ID (``data-isso-id``),
-which can be specified via the ``id`` option (see below) or via ``:isso-id``
-docinfo. If no thread ID given, ``/{docname}`` will be used.
+.. note::
 
-The directive supports the following options:
+   Isso only supports rendering **one comment thread on the same page**.
+   If you insert multiple comment threads on the same page, the extra threads
+   will display error messages.
 
-:id: (text)
-    Specify a thread ID, optional
-:title: (text)
-    Specify a thread title rather than use document title
+There are two ways to insert comment thread:
 
-Enable comments for all documents
-=================================
+Manual insert (at a specific location)
+--------------------------------------
 
-Use Sphinx's ``rst_epilog`` confval to append the ``isso`` directive at the
-end of every source file. For example:
+.. rst:directive:: .. isso:: [id]
 
-.. code:: python
+   Insert a Isso comment thread at a specific location.
 
-   rst_epilog = """
-   .. isso::
-   """
+   Threads are distinguished by unique Isso Thread ID (``data-isso-id``),
+   If no thread ID given, ``/{docname}`` (a slash-prefixed document name)
+   will be used.
 
-Disable comments for specified document
----------------------------------------
+   .. rst:directive:option:: title: title
+      :type: text
 
-This extension respects the ``:nocomments`` docinfo__:
+      Indicate thread title rather than use original document title.
 
-   If set, the web application won’t display a comment form for a page generated
-   from this source file.
+Batch insert (at the end of the document)
+-----------------------------------------
 
-__ https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html#file-wide-metadata
+If document's docname is matched by :confval:`isso_include_patterns` and
+not matched by :confval:`isso_exclude_patterns`, a comment thread will be
+automaticlly inserted at the end.
+
+For example:
+
+.. code-block:: python
+   :caption: Enable commenting for all documents
+
+   isso_include_patterns = ['**']
+   isso_exclude_patterns = []
+
+.. code-block:: python
+   :caption: Enable commenting for only blog posts
+
+   isso_include_patterns = ['blog/**']
+
+.. code-block:: python
+   :caption: Enable commenting for all documents (except blog posts)
+
+   isso_include_patterns = ['**']
+   isso_exclude_patterns = ['blog/**']
+
+DocInfos
+~~~~~~~~
+
+Users can configure the batched inserted comment thread by setting docinfo_:
+
+:``:isso-id``:
+   Indicate the Isso thread ID, similar to :rst:dir:`isso` directive's argument.
+
+:``:nocomments``:
+   This extension respects the standard ``:nocomments`` docinfo:
+
+      If set, the web application won’t display a comment form for a page generated
+      from this source file.
+
+.. _docinfo: https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html#file-wide-metadata
