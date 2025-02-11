@@ -128,10 +128,10 @@ class IssoTransform(SphinxTransform):
             return
 
         # Filter docname by patterns.
-        exclude = [patmatch(docname, p) for p in self.config.isso_exclude_patterns]
-        include = not exclude and [
-            patmatch(docname, p) for p in self.config.isso_include_patterns
-        ]
+        exclude = any([patmatch(docname, p) for p in self.config.isso_exclude_patterns])
+        include = not exclude and any(
+            [patmatch(docname, p) for p in self.config.isso_include_patterns]
+        )
         if include:
             self.document += nodes.transition()
             node = IssoNode()
@@ -164,10 +164,10 @@ class IssoTransform(SphinxTransform):
 
 
 def setup(app: Sphinx):
-    app.add_config_value('isso_url', None, '')
-    app.add_config_value('isso_client_config', {}, '')
-    app.add_config_value('isso_include_patterns', [], '')
-    app.add_config_value('isso_exclude_patterns', [], '')
+    app.add_config_value('isso_url', None, 'env')
+    app.add_config_value('isso_client_config', {}, 'env')
+    app.add_config_value('isso_include_patterns', [], 'env')
+    app.add_config_value('isso_exclude_patterns', [], 'env')
 
     app.add_directive('isso', IssoDirective)
     app.add_node(IssoNode, html=(html_visit_isso_node, html_depart_isso_oode))
@@ -178,5 +178,5 @@ def setup(app: Sphinx):
     return {
         'version': version('sphinxnotes.isso'),
         'parallel_read_safe': True,
-        "parallel_write_safe": True,
+        'parallel_write_safe': True,
     }

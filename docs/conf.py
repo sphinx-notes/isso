@@ -114,7 +114,8 @@ extensions.append('isso')
 # DOG FOOD CONFIGURATION START
 
 isso_url = 'https://comments.silverrainz.me:30501'
-isso_include_patterns = ['myst_test']
+isso_include_patterns = ['myst_test', '**']
+isso_exclude_patterns = ['index']
 
 extensions.append('myst_parser')
 
