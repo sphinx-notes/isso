@@ -133,6 +133,7 @@ class IssoTransform(SphinxTransform):
             patmatch(docname, p) for p in self.config.isso_include_patterns
         ]
         if include:
+            self.document += nodes.transition()
             node = IssoNode()
             node.setup(self.env, docname)
             self.document += node
