@@ -171,7 +171,7 @@ def setup(app: Sphinx):
 
     app.add_directive('isso', IssoDirective)
     app.add_node(IssoNode, html=(html_visit_isso_node, html_depart_isso_oode))
-    app.add_transform(IssoTransform)
+    app.add_post_transform(IssoTransform)
 
     app.connect('html-page-context', on_html_page_context)
 
