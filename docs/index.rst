@@ -21,7 +21,10 @@ sphinxnotes-isso
    :target: https://pypi.python.org/pypi/sphinxnotes-isso
    :alt: PyPI Package Downloads
 
-|docs| |license| |pypi| |download|
+.. |github| image:: https://img.shields.io/github/stars/sphinx-notes/isso
+   :alt: GitHub Repo stars
+
+|docs| |license| |pypi| |download| |github|
 
 Introduction
 ============
