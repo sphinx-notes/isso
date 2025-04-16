@@ -5,7 +5,7 @@
 sphinxnotes-isso
 ================
 
-.. |docs| image:: https://img.shields.io/github/deployments/sphinx-notes/isso/github-pages
+.. |docs| image:: https://img.shields.io/github/deployments/sphinx-notes/isso/github-pages?label=docs
    :target: https://sphinx.silverrainz.me/isso
    :alt: Documentation Status
 
@@ -21,7 +21,11 @@ sphinxnotes-isso
    :target: https://pypi.python.org/pypi/sphinxnotes-isso
    :alt: PyPI Package Downloads
 
-|docs| |license| |pypi| |download|
+.. |github| image:: https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white/
+   :target: https://github.com/sphinx-notes/isso
+   :alt: GitHub Repository
+
+|docs| |license| |pypi| |download| |github|
 
 Introduction
 ============
