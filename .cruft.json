@@ -9,7 +9,7 @@
       "full_name": "sphinxnotes-isso",
       "author": "Shengyu Zhang",
       "description": "Sphinx extension for embeding Isso comments in documents",
-      "version": "1.1",
+      "version": "2.0",
       "github_owner": "sphinx-notes",
       "github_repo": "isso",
       "pypi_name": "sphinxnotes-isso",

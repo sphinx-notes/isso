@@ -23,7 +23,7 @@ Version 2.x
 ===========
 
 .. version:: 2.0
-   :date: 2025-02
+   :date: 2025-11-04
 
    - Add :confval:`isso_include_patterns` and :confval:`isso_exclude_patterns`
      for automaticlly inserting comment thread to the end of document (:pull:`10`)
