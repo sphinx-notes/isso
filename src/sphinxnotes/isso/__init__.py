@@ -12,7 +12,6 @@ This extension is modified from sphinxcontrib-disqus.
 from __future__ import annotations
 from typing import TYPE_CHECKING
 import posixpath
-from importlib.metadata import version
 
 from docutils import nodes
 from docutils.parsers.rst import directives
