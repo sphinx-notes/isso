@@ -90,7 +90,7 @@ There are two ways to add a comment thread to documentation:
 
 2. Use the :rst:dir:`isso` directive, this will only affect the current document.
 
-   .. rst-example::
+   .. example::
 
       .. isso::
 
