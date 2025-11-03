@@ -7,9 +7,6 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-import os
-import sys
-
 # -- Project information -----------------------------------------------------
 
 project = 'sphinxnotes-isso'
@@ -28,6 +25,7 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx_design',
     'sphinx_copybutton',
+    'sphinx_last_updated_by_git',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -95,6 +93,15 @@ intersphinx_mapping = {
     'jinja': ('https://jinja.palletsprojects.com/en/latest/', None),
 }
 
+extensions.append('sphinx_sitemap')
+sitemap_filename = "sitemap.xml"
+sitemap_url_scheme = "{link}"
+
+extensions.append('sphinxext.opengraph')
+ogp_site_url = html_baseurl
+ogp_site_name = project
+ogp_image = html_baseurl + '/' + html_logo
+
 extensions.append('sphinxnotes.comboroles')
 comboroles_roles = {
     'parsed_literal': (['literal'], True),
@@ -108,15 +115,14 @@ primary_domain = 'any'
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
+import os
+import sys
 sys.path.insert(0, os.path.abspath('../src/sphinxnotes'))
 extensions.append('isso')
 
-# DOG FOOD CONFIGURATION START
-
+# CUSTOM CONFIGURATION
 isso_url = 'https://comments.silverrainz.me:30501'
 isso_include_patterns = ['myst_test', '**']
 isso_exclude_patterns = ['index']
 
 extensions.append('myst_parser')
-
-# DOG FOOD CONFIGURATION END

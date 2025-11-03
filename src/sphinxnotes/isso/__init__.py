@@ -21,11 +21,12 @@ from sphinx.writers.html5 import HTML5Translator
 from sphinx.transforms import SphinxTransform
 from sphinx.util.matching import patmatch
 
-
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
     from sphinx.environment import BuildEnvironment
 from sphinx.util import logging
+
+from . import meta
 
 
 logger = logging.getLogger(__name__)
@@ -164,6 +165,8 @@ class IssoTransform(SphinxTransform):
 
 
 def setup(app: Sphinx):
+    meta.pre_setup(app)
+
     app.add_config_value('isso_url', None, 'env')
     app.add_config_value('isso_client_config', {}, 'env')
     app.add_config_value('isso_include_patterns', [], 'env')
@@ -175,8 +178,4 @@ def setup(app: Sphinx):
 
     app.connect('html-page-context', on_html_page_context)
 
-    return {
-        'version': version('sphinxnotes.isso'),
-        'parallel_read_safe': True,
-        'parallel_write_safe': True,
-    }
+    return meta.post_setup(app)

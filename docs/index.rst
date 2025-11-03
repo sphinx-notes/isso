@@ -8,19 +8,15 @@ sphinxnotes-isso
 .. |docs| image:: https://img.shields.io/github/deployments/sphinx-notes/isso/github-pages?label=docs
    :target: https://sphinx.silverrainz.me/isso
    :alt: Documentation Status
-
 .. |license| image:: https://img.shields.io/github/license/sphinx-notes/isso
    :target: https://github.com/sphinx-notes/isso/blob/master/LICENSE
    :alt: Open Source License
-
 .. |pypi| image:: https://img.shields.io/pypi/v/sphinxnotes-isso.svg
-   :target: https://pypi.python.org/pypi/sphinxnotes-isso
+   :target: https://pypistats.org/packages/sphinxnotes-isso
    :alt: PyPI Package
-
 .. |download| image:: https://img.shields.io/pypi/dm/sphinxnotes-isso
    :target: https://pypi.python.org/pypi/sphinxnotes-isso
    :alt: PyPI Package Downloads
-
 .. |github| image:: https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white/
    :target: https://github.com/sphinx-notes/isso
    :alt: GitHub Repository
@@ -52,11 +48,13 @@ Getting Started
    We assume you already have a Sphinx documentation,
    if not, see `Getting Started with Sphinx`_.
 
+
 First, downloading extension from PyPI:
 
 .. code-block:: console
 
    $ pip install sphinxnotes-isso
+
 
 Then, add the extension name to ``extensions`` configuration item in your
 :parsed_literal:`conf.py_`:
