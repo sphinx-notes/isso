@@ -23,7 +23,7 @@ clean:
 
 .PHONY: fmt
 fmt:
-	ruff format src/ && ruff check --fix src/
+	ruff format src/ tests/ && ruff check --fix src/ tests/
 
 .PHONY: test
 test:
@@ -36,7 +36,8 @@ test:
 # Build distribution package, for "install" or "upload".
 .PHONY: dist
 dist: pyproject.toml clean
-	$(PY) -m build
+	# Use ``--no-isolation`` to prevent network accessing.
+	$(PY) -m build --no-isolation
 
 # Install distribution package to user directory.
 #
