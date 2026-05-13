@@ -1,5 +1,4 @@
 # This file is generated from sphinx-notes/cookiecutter.
-# You need to consider modifying the TEMPLATE or modifying THIS FILE.
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -91,6 +90,9 @@ gtagjs_ids = ['G-E4SNX0WZYV']
 extensions.append('sphinx.ext.autodoc')
 autoclass_content = 'init'
 autodoc_typehints = 'description'
+autodoc_default_options = {
+    'member-order': 'bysource',
+}
 
 extensions.append('sphinx.ext.intersphinx')
 intersphinx_mapping = {}
@@ -108,6 +110,7 @@ extensions.append('sphinxnotes.comboroles')
 comboroles_roles = {
     'parsed_literal': (['literal'], True),
 }
+
 
 extensions.append('sphinxnotes.project')
 primary_domain = 'any'
