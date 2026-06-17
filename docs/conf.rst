@@ -2,12 +2,12 @@
 Configuration
 =============
 
-.. confval:: isso_url
+.. autoconfval:: isso_url
 
    HTTP URL points to your Isso server.
 
 
-.. confval:: isso_client_config
+.. autoconfval:: isso_client_config
 
    A mapping that corresponding to `Isso Client Configuration`_.
 
@@ -16,9 +16,7 @@ Configuration
    .. _Isso Client Configuration: https://posativ.org/isso/docs/configuration/client/
 
 
-.. confval:: isso_exclude_patterns
-   type: list[str]
-   default: []
+.. autoconfval:: isso_exclude_patterns
 
    A list of `glob-style patterns`_ that should be excluded when inserting Isso
    comment thread.
@@ -30,9 +28,7 @@ Configuration
    .. _glob-style patterns: https://www.sphinx-doc.org/en/master/usage/configuration.html#glob-style-patterns
 
 
-.. confval:: isso_include_patterns
-   type: list[str]
-   default: []
+.. autoconfval:: isso_include_patterns
 
    A list of `glob-style patterns`_ that are used to insert Isso comment thread.
    They are matched against the document name (docname).

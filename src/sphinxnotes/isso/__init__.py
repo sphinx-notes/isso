@@ -166,10 +166,10 @@ class IssoTransform(SphinxTransform):
 def setup(app: Sphinx):
     meta.pre_setup(app)
 
-    app.add_config_value('isso_url', None, 'env')
-    app.add_config_value('isso_client_config', {}, 'env')
-    app.add_config_value('isso_include_patterns', [], 'env')
-    app.add_config_value('isso_exclude_patterns', [], 'env')
+    app.add_config_value('isso_url', None, 'env', types=str)
+    app.add_config_value('isso_client_config', {}, 'env', types=dict)
+    app.add_config_value('isso_include_patterns', [], 'env', types=list)
+    app.add_config_value('isso_exclude_patterns', [], 'env', types=list)
 
     app.add_directive('isso', IssoDirective)
     app.add_node(IssoNode, html=(html_visit_isso_node, html_depart_isso_oode))
