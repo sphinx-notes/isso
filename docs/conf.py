@@ -129,5 +129,8 @@ extensions.append('sphinxnotes.isso')
 isso_url = 'https://comments.silverrainz.me:30501'
 isso_include_patterns = ['myst_test', '**']
 isso_exclude_patterns = ['index']
+isso_client_config = {
+    'data-isso-sorting': 'newest', # isso>=0.13.1
+}
 
 extensions.append('myst_parser')
